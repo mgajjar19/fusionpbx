@@ -38,6 +38,9 @@
 		exit;
 	}
 
+//connect to the database
+	$database = new database;
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -109,7 +112,6 @@
 		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
 	}
 	$sql .= $sql_search ?? '';
-	$database = new database;
 	$num_rows = $database->select($sql, $parameters ?? null, 'column');
 
 //prepare to page the results
@@ -125,10 +127,15 @@
 	$offset = $rows_per_page * $page;
 
 //get the list
-	$sql = str_replace('count(*)', '*', $sql);
+	$sql = "select * from v_conference_centers ";
+	$sql .= "where true ";
+	if ($show != "all" || !permission_exists('conference_center_all')) {
+		$sql .= "and (domain_uuid = :domain_uuid or domain_uuid is null) ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	}
+	$sql .= $sql_search ?? '';
 	$sql .= order_by($order_by, $order, null, null, $sort);
 	$sql .= limit_offset($rows_per_page, $offset);
-	$database = new database;
 	$conference_centers = $database->select($sql, $parameters ?? null, 'all');
 	unset($sql, $parameters);
 
@@ -138,7 +145,7 @@
 
 //update the array to show only the greeting file name
 	$x = 0;
-	foreach ($conference_centers as &$row) {
+	foreach ($conference_centers as $row) {
 		$row['conference_center_greeting'] = basename($row['conference_center_greeting'] ?? '');
 	}
 
@@ -262,7 +269,6 @@
 			echo "</tr>\n";
 			$x++;
 		}
-		unset($conference_centers);
 	}
 
 	echo "</table>\n";

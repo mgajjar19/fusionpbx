@@ -20,6 +20,7 @@
 		$apps[$x]['description']['fr-fr'] = "Pour recevoir un fax, configurez une extension du FAX et après diriger un numéro vers lui.";
 		$apps[$x]['description']['he-il'] = "";
 		$apps[$x]['description']['it-it'] = "";
+		$apps[$x]['description']['ka-ge'] = "ფაქსის მისაღებად მოირგეთ ფაქსის გაფართოება და გადაამისამართეთ შემომავალი ფაქსი გამოყოფილი ნომრით, ან შეგიძლიათ გამოიცნოთ ფაქსის ტონი ჩანართში 'საჯარო'.";
 		$apps[$x]['description']['nl-nl'] = "";
 		$apps[$x]['description']['pl-pl'] = "";
 		$apps[$x]['description']['pt-br'] = "";
@@ -532,6 +533,11 @@
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "fax_email";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "faxemail";
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
+		$apps[$x]['db'][$y]['fields'][$z]['search'] = 'true';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "fax_file";
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['search'] = 'true';
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";

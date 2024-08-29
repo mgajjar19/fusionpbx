@@ -43,6 +43,9 @@
 		exit;
 	}
 
+//connect to the database
+	$database = new database;
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -403,10 +406,9 @@
 		echo 		"<input type='checkbox' name='action[menu_defaults]' id='do_menu' value='1' onclick=\"event.stopPropagation(); $('#sel_menu').fadeToggle('fast');\">";
 		echo 		"<select name='sel_menu' id='sel_menu' class='formfld' style='display: none; vertical-align: middle; margin-left: 5px;' onclick=\"event.stopPropagation();\">";
 		$sql = "select * from v_menus order by menu_name asc;";
-		$database = new database;
 		$result = $database->select($sql, null, 'all');
 		if (is_array($result) && sizeof($result) != 0) {
-			foreach ($result as &$row) {
+			foreach ($result as $row) {
 				if ($row["menu_name"] == 'default') {
 					echo "<option selected value='".$row["menu_uuid"]."|".$row["menu_language"]."'>".$row["menu_name"]."</option>";
 				}

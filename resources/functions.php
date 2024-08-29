@@ -149,12 +149,11 @@
 		function uuid() {
 			$uuid = null;
 			if (PHP_OS === 'FreeBSD') {
-				$uuid = trim(shell_exec("uuid -v 4"));
+				$uuid = trim(shell_exec("uuidgen"));
 				if (is_uuid($uuid)) {
 					return $uuid;
 				} else {
-					echo "Please install the following package.\n";
-					echo "pkg install ossp-uuid\n";
+					echo "Please install uuidgen.\n";
 					exit;
 				}
 			}
@@ -167,7 +166,7 @@
 					if (is_uuid($uuid)) {
 						return $uuid;
 					} else {
-						echo "Please install the uuidgen.\n";
+						echo "Please install uuidgen.\n";
 						exit;
 					}
 				}
@@ -845,7 +844,7 @@
 		if (is_numeric(trim($phone_number ?? '', ' +'))) {
 			if (isset($_SESSION["format"]["phone"])) {
 				$phone_number = trim($phone_number, ' +');
-				foreach ($_SESSION["format"]["phone"] as &$format) {
+				foreach ($_SESSION["format"]["phone"] as $format) {
 					$format_count = substr_count($format, 'x');
 					$format_count = $format_count + substr_count($format, 'R');
 					$format_count = $format_count + substr_count($format, 'r');
